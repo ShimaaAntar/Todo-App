@@ -11,6 +11,7 @@ import com.example.todo.base.BaseActivity
 import com.example.todo.database.TaskDatabase
 import com.example.todo.database.model.Task
 import com.example.todo.databinding.ActivityHomeBinding
+import com.example.todoapp.constance.Constance
 
 
 class HomeActivity : BaseActivity(){
@@ -30,6 +31,12 @@ class HomeActivity : BaseActivity(){
         taskadapter.onTaskClickListener = object : TaskAdapter.OnTaskClickListener {
             override fun onTaskClick(position: Int, tasks: Task) {
                 showDialogDetailsTask(position, tasks)
+            }
+        }
+
+        taskadapter.onLongClickListener=object :TaskAdapter.OnLongClickListener{
+            override fun onLongClick(position: Int, tasks: Task) {
+                startEditTask(tasks)
             }
         }
 
@@ -104,6 +111,12 @@ class HomeActivity : BaseActivity(){
     private fun showDialogDetailsTask(position: Int, task: Task) {
         val dailoge = DetailsDialogeFragment(position, task)
         dailoge.show(supportFragmentManager, "")
+    }
+    private fun startEditTask(task: Task) {
+        val intent = Intent(applicationContext, EditActivity::class.java)
+        intent.putExtra(Constance.EXTRA_TASK, task.title)
+        intent.putExtra(Constance.EXTRA_ID,task.id)
+        startActivity(intent)
     }
 
 }
