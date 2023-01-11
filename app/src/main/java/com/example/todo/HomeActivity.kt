@@ -1,5 +1,6 @@
 package com.example.todo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.todo.database.TaskDatabase
@@ -12,6 +13,14 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.addBt.setOnClickListener {
+            openAddTaskActivity()
+        }
+
+    }
+    private fun openAddTaskActivity() {
+        val intent = Intent(this, AddTasksActivity::class.java)
+        startActivity(intent)
     }
 
 
