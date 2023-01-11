@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.base.BaseActivity
 import com.example.todo.database.TaskDatabase
+import com.example.todo.database.model.Task
 import com.example.todo.databinding.ActivityHomeBinding
 
 
@@ -25,6 +26,12 @@ class HomeActivity : BaseActivity(){
         taskadapter = TaskAdapter(listOf())
         binding.recyclerView.adapter=taskadapter
         swipeTODelete()
+
+        taskadapter.onTaskClickListener = object : TaskAdapter.OnTaskClickListener {
+            override fun onTaskClick(position: Int, tasks: Task) {
+                showDialogDetailsTask(position, tasks)
+            }
+        }
 
 
     }
@@ -93,5 +100,10 @@ class HomeActivity : BaseActivity(){
             }, 2000)
         }
     }).attachToRecyclerView(binding.recyclerView)
+
+    private fun showDialogDetailsTask(position: Int, task: Task) {
+        val dailoge = DetailsDialogeFragment(position, task)
+        dailoge.show(supportFragmentManager, "")
+    }
 
 }
