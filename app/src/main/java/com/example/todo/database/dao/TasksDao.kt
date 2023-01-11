@@ -25,4 +25,5 @@ interface TasksDao {
 
     @Query("select * from Task where title like :word")
     fun  readTask(word: String):Task
+
 }
